@@ -40,4 +40,20 @@ class NoteProvider extends ChangeNotifier {
         .toList();
     notifyListeners();
   }
+
+  Future<void> removeNote(String id) async {
+    try {
+      await DBHelper.deleteData('user_notes', id);
+      _noteItem.removeWhere((note) => note.id == id);
+      notifyListeners();
+    } catch (e) {}
+  }
+
+  // Future<void> updateNote(String id) async {
+  //   try {
+  //     await DBHelper.updateNote('user_notes', data, id);
+  //     _noteItem.removeWhere((note) => note.id == id);
+  //     notifyListeners();
+  //   } catch (e) {}
+  // }
 }

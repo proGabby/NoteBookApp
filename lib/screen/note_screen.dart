@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:noteapp/providers/notes_provider.dart';
+import 'package:noteapp/screen/add_note.dart';
 import 'package:noteapp/widget/Note_widget.dart';
 import 'package:provider/provider.dart';
 
@@ -44,7 +45,10 @@ class NoteScreen extends StatelessWidget {
                     : ListView.builder(
                         itemCount: numberOfNotes,
                         itemBuilder: (ctx, index) {
-                          return NoteWidget(noteItem: notesData.notes[index]);
+                          return Padding(
+                            padding: const EdgeInsets.all(3.0),
+                            child: NoteWidget(noteItem: notesData.notes[index]),
+                          );
                         });
               });
         },
@@ -52,7 +56,7 @@ class NoteScreen extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
         onPressed: () {
-          return context.push('/addNote');
+          return context.push(AddNoteScreen.screenRoute, extra: null);
         },
       ),
     );

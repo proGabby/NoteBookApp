@@ -4,8 +4,12 @@ import 'package:intl/intl.dart';
 import 'package:noteapp/providers/notes_provider.dart';
 import 'package:provider/provider.dart';
 
+import '../model/note_model.dart';
+
 class AddNoteScreen extends StatefulWidget {
-  const AddNoteScreen({Key? key}) : super(key: key);
+  static const screenRoute = '/addNote';
+  final Notes? note;
+  const AddNoteScreen({Key? key, this.note}) : super(key: key);
 
   @override
   State<AddNoteScreen> createState() => _AddNoteScreenState();
@@ -13,15 +17,25 @@ class AddNoteScreen extends StatefulWidget {
 
 class _AddNoteScreenState extends State<AddNoteScreen> {
   // final _formKey = GlobalKey<FormState>();
-  final _titleController = TextEditingController();
-  final _description = TextEditingController();
-  final _dateOfNote = DateFormat.yMd().format(DateTime.now());
+  var _titleController = TextEditingController();
+  var _description = TextEditingController();
+  var _dateOfNote = DateFormat.yMd().format(DateTime.now());
 
   @override
   void dispose() {
     _description.dispose();
     _titleController.dispose();
     super.dispose();
+  }
+
+  @override
+  void initState() {
+    if (widget.note?.id != null) {
+      _titleController.text = widget.note!.title;
+      _description.text = widget.note!.msg;
+      _dateOfNote = DateFormat.yMd().format(widget.note!.date);
+    }
+    super.initState();
   }
 
   void onSaved() async {
@@ -32,7 +46,7 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
     try {
       await Provider.of<NoteProvider>(context, listen: false)
           .addNotes(_titleController.text, _description.text);
-      context.pop();
+      context.go('/');
     } catch (e) {
       print(e);
     }

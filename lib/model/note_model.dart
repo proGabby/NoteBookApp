@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class Notes {
-  final String id;
+  final String? id;
   final String title;
   final String msg;
   final DateTime date;
