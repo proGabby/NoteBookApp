@@ -44,8 +44,21 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
     }
 
     try {
-      await Provider.of<NoteProvider>(context, listen: false)
-          .addNotes(_titleController.text, _description.text);
+      final avalList = Provider.of<NoteProvider>(context, listen: false).notes;
+      final isFound = avalList.any((item) => item.id == widget.note?.id);
+
+      if (!isFound) {
+        await Provider.of<NoteProvider>(context, listen: false)
+            .addNotes(_titleController.text, _description.text);
+      } else {
+        final updatedNote = Notes(
+            id: widget.note!.id,
+            title: _titleController.text,
+            msg: _description.text,
+            date: widget.note!.date);
+        await Provider.of<NoteProvider>(context, listen: false)
+            .updateNote(updatedNote);
+      }
       context.go('/');
     } catch (e) {
       print(e);

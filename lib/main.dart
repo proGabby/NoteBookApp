@@ -23,6 +23,7 @@ class MyApp extends StatelessWidget {
       value: NoteProvider(),
       child: MaterialApp.router(
           title: 'NoteBook App',
+          debugShowCheckedModeBanner: false,
           theme: ThemeData(
             // This is the theme of your application.
             //

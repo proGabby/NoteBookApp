@@ -49,11 +49,20 @@ class NoteProvider extends ChangeNotifier {
     } catch (e) {}
   }
 
-  // Future<void> updateNote(String id) async {
-  //   try {
-  //     await DBHelper.updateNote('user_notes', data, id);
-  //     _noteItem.removeWhere((note) => note.id == id);
-  //     notifyListeners();
-  //   } catch (e) {}
-  // }
+  Future<void> updateNote(Notes inputNote) async {
+    try {
+      await DBHelper.updateNote(
+          'user_notes',
+          {
+            'id': inputNote.id,
+            'title': inputNote.title,
+            'msg': inputNote.msg,
+            'date': inputNote.date.toIso8601String()
+          },
+          inputNote.id!);
+      _noteItem.removeWhere((note) => note.id == inputNote.id!);
+      _noteItem.add(inputNote);
+      notifyListeners();
+    } catch (e) {}
+  }
 }

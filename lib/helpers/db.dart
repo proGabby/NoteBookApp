@@ -31,12 +31,12 @@ class DBHelper {
     db.delete(table, where: 'id = ?', whereArgs: [id]);
   }
 
-  // static Future<void> updateNote(
-  //     String table, Map<String, dynamic> data, String id) async {
-  //   final db = await DBHelper.database();
-  //   db.update(table, data,
-  //       where: 'id = ?',
-  //       whereArgs: [id],
-  //       conflictAlgorithm: ConflictAlgorithm.replace);
-  // }
+  static Future<void> updateNote(
+      String table, Map<String, dynamic> data, String id) async {
+    final db = await DBHelper.database();
+    db.update(table, data,
+        where: 'id = ?',
+        whereArgs: [id],
+        conflictAlgorithm: ConflictAlgorithm.replace);
+  }
 }
